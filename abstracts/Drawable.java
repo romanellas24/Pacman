@@ -9,7 +9,9 @@ abstract public class Drawable {
 
     abstract public void update();
     abstract public char draw();
-    abstract public Coordinates getCoords();
+    public Coordinates getCoords() {
+        return coordinates;
+    }
 
     protected boolean isPositionValid(Coordinates coordinates) {
         if(coordinates.getX() < 0) return false;

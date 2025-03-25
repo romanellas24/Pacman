@@ -1,7 +1,9 @@
 package core;
 
+import todo.Food;
 import todo.Player;
 import utils.Config;
+import utils.Coordinates;
 import utils.Direction;
 
 import java.awt.event.KeyEvent;
@@ -13,10 +15,12 @@ public class GameUpdater implements KeyListener {
 
     private Direction playerDirection;
     private Player player;
+    private Food food;
 
     public GameUpdater() {
         playerDirection = Direction.STAY;
         player = new Player(MIDDLE_COORDINATES);
+        food = new Food(new Coordinates(3, 2));
     }
 
     private char[][] getVoidMatrix() {
@@ -36,22 +40,26 @@ public class GameUpdater implements KeyListener {
 
 
 
-
         //Retrieving symbols
         this.draw(gameMatrix);
         return gameMatrix;
     }
 
-    public void draw(char[][] gameMatrix){
+    public void draw(char[][] gameMatrix) {
         int x = player.getCoords().getX();
         int y = player.getCoords().getY();
         gameMatrix[x][y] = player.draw();
+
+        x = food.getCoords().getX();
+        y = food.getCoords().getY();
+        gameMatrix[x][y] = food.draw();
     }
 
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e) {
+    }
 
     public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()){
+        switch (e.getKeyCode()) {
             case KeyEvent.VK_W:
                 playerDirection = Direction.UP;
                 break;
@@ -70,6 +78,7 @@ public class GameUpdater implements KeyListener {
         }
     }
 
-    public void keyReleased(KeyEvent e) {}
+    public void keyReleased(KeyEvent e) {
+    }
 
 }
