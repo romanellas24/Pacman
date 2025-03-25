@@ -1,22 +1,21 @@
 package canvas;
 
 import utils.Config;
+import utils.Coordinates;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.LinkedList;
+import java.util.HashMap;
 
 public class TileDrawer extends JPanel {
-    private final LinkedList<Tile> tiles;
+    private final HashMap<Coordinates, Tile> tiles;
     private char[][] frame = null;
 
     public TileDrawer() {
-        tiles = new LinkedList<>();
+        tiles = new HashMap<>();
         for (int row = 0; row < Config.TILE_HEIGHT_LENGTH; row++)
             for (int col = 0; col < Config.TILE_WIDTH_LENGTH; col++)
-                synchronized (tiles) {
-                    tiles.add(new Tile(col, row));
-                }
+                tiles.put(new Coordinates(col, row), new Tile(col, row));
 
     }
 
@@ -33,18 +32,20 @@ public class TileDrawer extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (Tile tile : tiles) {
-            tile.draw(g);
-        }
+        for (int row = 0; row < Config.TILE_HEIGHT_LENGTH; row++)
+            for (int col = 0; col < Config.TILE_WIDTH_LENGTH; col++) {
+                if (tiles.get(new Coordinates(col, row)) != null)
+                    tiles.get(new Coordinates(col, row)).draw(g);
+            }
     }
 
     public void draw() {
         for (int row = 0; row < Config.TILE_HEIGHT_LENGTH; row++)
             for (int col = 0; col < Config.TILE_WIDTH_LENGTH; col++) {
                 synchronized (tiles) {
-                    tiles.add(new Tile(col, row));
+                    tiles.replace(new Coordinates(col, row), new Tile(col, row));
                     if (frame != null && frame[row][col] != ' ')
-                        tiles.add(handleTile(col, row, frame[row][col]));
+                        tiles.replace(new Coordinates(col, row), handleTile(col, row, frame[row][col]));
                 }
             }
 
