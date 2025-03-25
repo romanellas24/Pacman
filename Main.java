@@ -34,6 +34,7 @@ public class Main {
             if(frame == null)
                 continue;
             drawer.sendFrame(frame);
+            drawer.draw();
             window.repaint();
             frames++;
             if(seconds.isDelayElapsed()){

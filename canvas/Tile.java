@@ -7,9 +7,9 @@ import java.awt.*;
 
 public class Tile extends JPanel {
 
-    private final int x;
-    private final int y;
-    private Color color;
+    protected final int x;
+    protected final int y;
+    protected Color color;
 
     public Tile(int x, int y) {
         this.x = x;
