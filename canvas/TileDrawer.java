@@ -8,6 +8,7 @@ import java.util.LinkedList;
 
 public class TileDrawer extends JPanel {
     private LinkedList<Tile> tiles;
+    private char[][] frame = null;
 
     public TileDrawer() {
         tiles = new LinkedList<>();
@@ -22,5 +23,9 @@ public class TileDrawer extends JPanel {
         for (Tile tile : tiles) {
             tile.draw(g);
         }
+    }
+
+    public void sendFrame(char[][] frame) {
+        this.frame = frame;
     }
 }
