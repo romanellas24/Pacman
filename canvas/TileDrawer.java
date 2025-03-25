@@ -25,6 +25,8 @@ public class TileDrawer extends JPanel {
                 return new PlayerTile(row, col);
             case 'f':
                 return new FoodTile(row, col);
+            case 'w':
+                return new WallTile(row, col);
             default:
                 return new Tile(row, col);
         }

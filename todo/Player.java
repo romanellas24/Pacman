@@ -38,8 +38,12 @@ public class Player extends Controllable {
                 break;
         }
 
-        if (this.isPositionValid(coords))
+        if (this.isPositionValid(coords)) {
+            if(!coords.equals(this.previousCoordinates))
+                this.previousCoordinates = this.coordinates;
             this.coordinates = coords;
+        }
+
 
         direction = Direction.STAY;
     }
@@ -47,6 +51,10 @@ public class Player extends Controllable {
     @Override
     public char draw() {
         return 'P';
+    }
+
+    public void resetCoordinates() {
+        this.coordinates = previousCoordinates;
     }
 
 }

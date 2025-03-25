@@ -18,14 +18,16 @@ public class Main {
         window.setTitle("Pacman!");
         window.setVisible(true);
 
-        //Game loop starts here
+        //Preparing things for game loop
         int updates = 0;
         int frames = 0;
-        TimedSocket updateTimer = new TimedSocket(100);
-        TimedSocket seconds = new TimedSocket(1000);
+        TimedSocket updateTimer = new TimedSocket(Config.UPDATE_DELAY);
+        TimedSocket seconds = new TimedSocket(Config.DRAWING_RESET_COUNT_DELAY);
         GameUpdater updater = new GameUpdater();
         window.addKeyListener(updater);
         char[][] frame = null;
+
+        //Game loop starts here
         while (true) {
             if(updateTimer.isDelayElapsed()){
                 frame = updater.update();

@@ -3,6 +3,7 @@ package core;
 import abstracts.Drawable;
 import todo.Food;
 import todo.Player;
+import todo.Wall;
 import utils.Config;
 import utils.Coordinates;
 import utils.Direction;
@@ -18,6 +19,7 @@ public class GameUpdater implements KeyListener {
     private Direction playerDirection;
     private final Player player;
     private Food food;
+    private Wall wall;
     private final LinkedList<Drawable> drawables;
     private EventHandler eventHandler;
 
@@ -25,6 +27,7 @@ public class GameUpdater implements KeyListener {
         playerDirection = Direction.STAY;
         player = new Player(MIDDLE_COORDINATES);
         food = new Food(new Coordinates(3, 2));
+        wall = new Wall(new Coordinates(5, 4));
         drawables = new LinkedList<>();
         eventHandler = new EventHandler();
     }
@@ -42,6 +45,7 @@ public class GameUpdater implements KeyListener {
         drawables.clear();
         drawables.add(player);
         drawables.add(food); //TODO CHANGE
+        drawables.add(wall); //TODO CHANGE
         player.move(playerDirection);
 
         for(Drawable d: drawables) {
