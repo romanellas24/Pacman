@@ -1,4 +1,4 @@
-package todo;
+package gameObjects;
 
 import abstracts.Controllable;
 import utils.Coordinates;

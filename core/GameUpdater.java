@@ -1,9 +1,9 @@
 package core;
 
 import abstracts.Drawable;
-import todo.Food;
-import todo.Player;
-import todo.Wall;
+import gameObjects.Food;
+import gameObjects.Player;
+import gameObjects.Wall;
 import utils.Config;
 import utils.Coordinates;
 import utils.Direction;
@@ -13,21 +13,25 @@ import java.awt.event.KeyListener;
 import java.util.LinkedList;
 
 import static utils.Config.MIDDLE_COORDINATES;
+import static utils.Config.TILE_HEIGHT_LENGTH;
 
 public class GameUpdater implements KeyListener {
 
     private Direction playerDirection;
     private final Player player;
     private Food food;
-    private Wall wall;
     private final LinkedList<Drawable> drawables;
     private EventHandler eventHandler;
+    private Map map;
 
     public GameUpdater() {
         playerDirection = Direction.STAY;
         player = new Player(MIDDLE_COORDINATES);
-        food = new Food(new Coordinates(3, 2));
-        wall = new Wall(new Coordinates(5, 4));
+
+        food = new Food(new Coordinates(1, 1));
+        map = new Map();
+
+
         drawables = new LinkedList<>();
         eventHandler = new EventHandler();
     }
@@ -45,15 +49,14 @@ public class GameUpdater implements KeyListener {
         drawables.clear();
         drawables.add(player);
         drawables.add(food); //TODO CHANGE
-        drawables.add(wall); //TODO CHANGE
+        drawables.addAll(map.getWalls());
         player.move(playerDirection);
 
-        for(Drawable d: drawables) {
+        for (Drawable d : drawables) {
             d.update();
-            if(player.getCoords().equals(d.getCoords()))
+            if (player.getCoords().equals(d.getCoords()))
                 eventHandler.handleCollision(player, d);
         }
-
 
 
         playerDirection = Direction.STAY;
@@ -63,9 +66,9 @@ public class GameUpdater implements KeyListener {
     }
 
     public void draw(char[][] gameMatrix) {
-        for(Drawable d: drawables) {
+        for (Drawable d : drawables) {
             char drawing = d.draw();
-            if(drawing == ' ')
+            if (drawing == ' ')
                 continue;
             int x = d.getCoords().getX();
             int y = d.getCoords().getY();
@@ -73,7 +76,8 @@ public class GameUpdater implements KeyListener {
         }
     }
 
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e) {
+    }
 
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
@@ -95,6 +99,7 @@ public class GameUpdater implements KeyListener {
         }
     }
 
-    public void keyReleased(KeyEvent e) {}
+    public void keyReleased(KeyEvent e) {
+    }
 
 }
