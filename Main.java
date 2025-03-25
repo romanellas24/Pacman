@@ -31,10 +31,11 @@ public class Main {
                 frame = updater.update();
                 updates++;
             }
+
             if(frame == null)
                 continue;
+
             drawer.sendFrame(frame);
-            drawer.draw();
             window.repaint();
             frames++;
             if(seconds.isDelayElapsed()){

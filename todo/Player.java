@@ -20,20 +20,23 @@ public class Player extends Controllable {
 
     @Override
     public void update() {
+        Coordinates coords = coordinates;
         switch (direction) {
             case UP:
-                this.coordinates = new Coordinates(coordinates.getX(), coordinates.getY() - 1);
+                coords = new Coordinates(coordinates.getX() - 1, coordinates.getY());
                 break;
             case DOWN:
-                this.coordinates = new Coordinates(coordinates.getX(), coordinates.getY() + 1);
+                coords = new Coordinates(coordinates.getX() + 1, coordinates.getY());
                 break;
             case LEFT:
-                this.coordinates = new Coordinates(coordinates.getX() - 1, coordinates.getY());
+                coords = new Coordinates(coordinates.getX(), coordinates.getY() - 1);
                 break;
             case RIGHT:
-                this.coordinates = new Coordinates(coordinates.getX() + 1, coordinates.getY());
+                coords = new Coordinates(coordinates.getX(), coordinates.getY() + 1);
                 break;
         }
+        if (this.isPositionValid(coords))
+            this.coordinates = coords;
 
         direction = Direction.STAY;
     }

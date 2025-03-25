@@ -30,12 +30,12 @@ public class GameUpdater implements KeyListener {
     public char[][] update() {
         char[][] gameMatrix = getVoidMatrix();
 
-
         player.move(playerDirection);
         player.update();
-
-
         playerDirection = Direction.STAY;
+
+
+
 
         //Retrieving symbols
         this.draw(gameMatrix);
