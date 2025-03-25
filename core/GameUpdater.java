@@ -1,5 +1,6 @@
 package core;
 
+import abstracts.Drawable;
 import todo.Food;
 import todo.Player;
 import utils.Config;
@@ -8,19 +9,24 @@ import utils.Direction;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.LinkedList;
 
 import static utils.Config.MIDDLE_COORDINATES;
 
 public class GameUpdater implements KeyListener {
 
     private Direction playerDirection;
-    private Player player;
+    private final Player player;
     private Food food;
+    private final LinkedList<Drawable> drawables;
+    private EventHandler eventHandler;
 
     public GameUpdater() {
         playerDirection = Direction.STAY;
         player = new Player(MIDDLE_COORDINATES);
         food = new Food(new Coordinates(3, 2));
+        drawables = new LinkedList<>();
+        eventHandler = new EventHandler();
     }
 
     private char[][] getVoidMatrix() {
@@ -33,30 +39,37 @@ public class GameUpdater implements KeyListener {
 
     public char[][] update() {
         char[][] gameMatrix = getVoidMatrix();
-
+        drawables.clear();
+        drawables.add(player);
+        drawables.add(food); //TODO CHANGE
         player.move(playerDirection);
-        player.update();
+
+        for(Drawable d: drawables) {
+            d.update();
+            if(player.getCoords().equals(d.getCoords()))
+                eventHandler.handleCollision(player, d);
+        }
+
+
+
         playerDirection = Direction.STAY;
-
-
-
         //Retrieving symbols
         this.draw(gameMatrix);
         return gameMatrix;
     }
 
     public void draw(char[][] gameMatrix) {
-        int x = player.getCoords().getX();
-        int y = player.getCoords().getY();
-        gameMatrix[x][y] = player.draw();
-
-        x = food.getCoords().getX();
-        y = food.getCoords().getY();
-        gameMatrix[x][y] = food.draw();
+        for(Drawable d: drawables) {
+            char drawing = d.draw();
+            if(drawing == ' ')
+                continue;
+            int x = d.getCoords().getX();
+            int y = d.getCoords().getY();
+            gameMatrix[x][y] = drawing;
+        }
     }
 
-    public void keyTyped(KeyEvent e) {
-    }
+    public void keyTyped(KeyEvent e) {}
 
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
@@ -78,7 +91,6 @@ public class GameUpdater implements KeyListener {
         }
     }
 
-    public void keyReleased(KeyEvent e) {
-    }
+    public void keyReleased(KeyEvent e) {}
 
 }

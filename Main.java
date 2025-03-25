@@ -21,7 +21,7 @@ public class Main {
         //Game loop starts here
         int updates = 0;
         int frames = 0;
-        TimedSocket updateTimer = new TimedSocket(250);
+        TimedSocket updateTimer = new TimedSocket(100);
         TimedSocket seconds = new TimedSocket(1000);
         GameUpdater updater = new GameUpdater();
         window.addKeyListener(updater);

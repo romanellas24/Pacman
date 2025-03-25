@@ -5,8 +5,11 @@ import utils.Coordinates;
 
 public class Food extends Drawable {
 
+    private boolean isDeleted;
+
     public Food(Coordinates coords) {
         this.coordinates = coords;
+        this.isDeleted = false;
     }
 
     @Override
@@ -14,6 +17,17 @@ public class Food extends Drawable {
 
     @Override
     public char draw() {
-        return 'f';
+        if(!isDeleted())
+            return 'f';
+        return ' ';
     }
+
+    public void markAsDeleted() {
+        isDeleted = true;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
 }

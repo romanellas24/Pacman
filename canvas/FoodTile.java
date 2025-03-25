@@ -13,7 +13,7 @@ public class FoodTile extends Tile{
     @Override
     public void draw(Graphics g) {
         super.draw(g);
-        g.setColor(Color.YELLOW);
+        g.setColor(Color.ORANGE);
         g.fillOval(this.x * Config.TILE_DIMENSION + Config.TILE_DIMENSION / 3,
                 this.y * Config.TILE_DIMENSION + Config.TILE_DIMENSION / 3,
                 Config.TILE_DIMENSION / 3,

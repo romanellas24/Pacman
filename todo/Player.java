@@ -7,10 +7,12 @@ import utils.Direction;
 public class Player extends Controllable {
 
     private Direction direction;
+    private Coordinates previousCoordinates;
 
     public Player(Coordinates coordinates) {
         direction = Direction.STAY;
         this.coordinates = coordinates;
+        this.previousCoordinates = coordinates;
     }
 
     @Override
@@ -21,13 +23,21 @@ public class Player extends Controllable {
     @Override
     public void update() {
         Coordinates coords = coordinates;
-        coords = switch (direction) {
-            case UP -> new Coordinates(coordinates.getX() - 1, coordinates.getY());
-            case DOWN -> new Coordinates(coordinates.getX() + 1, coordinates.getY());
-            case LEFT -> new Coordinates(coordinates.getX(), coordinates.getY() - 1);
-            case RIGHT -> new Coordinates(coordinates.getX(), coordinates.getY() + 1);
-            default -> coords;
-        };
+        switch (direction) {
+            case UP:
+                coords = new Coordinates(coordinates.getX() - 1, coordinates.getY());
+                break;
+            case DOWN:
+                coords = new Coordinates(coordinates.getX() + 1, coordinates.getY());
+                break;
+            case LEFT:
+                coords = new Coordinates(coordinates.getX(), coordinates.getY() - 1);
+                break;
+            case RIGHT:
+                coords = new Coordinates(coordinates.getX(), coordinates.getY() + 1);
+                break;
+        }
+
         if (this.isPositionValid(coords))
             this.coordinates = coords;
 
