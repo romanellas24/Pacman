@@ -2,6 +2,7 @@ package core;
 
 import abstracts.Drawable;
 import gameObjects.Food;
+import gameObjects.Ghost;
 import gameObjects.Player;
 import gameObjects.Wall;
 import utils.Config;
@@ -10,16 +11,19 @@ import utils.Direction;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 
-import static utils.Config.MIDDLE_COORDINATES;
-import static utils.Config.TILE_HEIGHT_LENGTH;
+import static utils.Config.*;
 
 public class GameUpdater implements KeyListener {
 
     private Direction playerDirection;
-    private final Player player;
-    private Food food;
+    private Player player;
+    private LinkedList<Food> food;
+    private LinkedList<Ghost> ghosts;
     private final LinkedList<Drawable> drawables;
     private EventHandler eventHandler;
     private Map map;
@@ -28,9 +32,17 @@ public class GameUpdater implements KeyListener {
         playerDirection = Direction.STAY;
         player = new Player(MIDDLE_COORDINATES);
 
-        food = new Food(new Coordinates(1, 1));
+        food = new LinkedList<>();
+        ghosts = new LinkedList<>();
+        ghosts.add(new Ghost(new Coordinates(1, 1)));
+        ghosts.add(new Ghost(new Coordinates(1, TILE_WIDTH_LENGTH - 2)));
+        ghosts.add(new Ghost(new Coordinates(TILE_HEIGHT_LENGTH - 2, 1)));
+        ghosts.add(new Ghost(new Coordinates(TILE_HEIGHT_LENGTH - 2, TILE_WIDTH_LENGTH - 2)));
+
         map = new Map();
 
+        for (Coordinates coords : getFoodCoords())
+            food.add(new Food(coords));
 
         drawables = new LinkedList<>();
         eventHandler = new EventHandler();
@@ -47,10 +59,16 @@ public class GameUpdater implements KeyListener {
     public char[][] update() {
         char[][] gameMatrix = getVoidMatrix();
         drawables.clear();
+        drawables.addAll(food);
         drawables.add(player);
-        drawables.add(food); //TODO CHANGE
+        drawables.addAll(ghosts);
         drawables.addAll(map.getWalls());
         player.move(playerDirection);
+
+        for (Ghost ghost : ghosts) {
+            Direction[] dirs = getGhostsAvailableDirections(ghost.getCoords(), map.getWalls());
+            ghost.setAvailDirections(dirs);
+        }
 
         for (Drawable d : drawables) {
             d.update();
@@ -65,13 +83,51 @@ public class GameUpdater implements KeyListener {
         return gameMatrix;
     }
 
+    private Direction[] getGhostsAvailableDirections(Coordinates ghostCoords, LinkedList<Wall> walls) {
+        HashMap<Coordinates, Direction> map = new HashMap<>();
+        map.put(new Coordinates(ghostCoords.getRow() - 1, ghostCoords.getCol()), Direction.UP);
+        map.put(new Coordinates(ghostCoords.getRow() + 1, ghostCoords.getCol()), Direction.DOWN);
+        map.put(new Coordinates(ghostCoords.getRow(), ghostCoords.getCol() - 1), Direction.LEFT);
+        map.put(new Coordinates(ghostCoords.getRow(), ghostCoords.getCol() + 1), Direction.RIGHT);
+
+
+        LinkedList<Coordinates> toRemove = new LinkedList<>();
+
+        for (Wall wall : walls)
+            for (Coordinates coordinates : map.keySet())
+                if (wall.getCoords().equals(coordinates) || !Coordinates.isPositionValid(coordinates))
+                    toRemove.add(coordinates);
+
+        for (Coordinates coordinates : toRemove)
+            map.remove(coordinates);
+
+        return map.values().toArray(Direction[]::new);
+    }
+
+    private LinkedList<Coordinates> getFoodCoords(){
+        LinkedList<Coordinates> foodCoords = new LinkedList<>();
+        ArrayList<Coordinates> usedCoords = new ArrayList<>();
+        usedCoords.add(player.getCoords());
+        for (Wall wall : map.getWalls())
+            usedCoords.add(wall.getCoords());
+        for (Ghost ghost : ghosts)
+            usedCoords.add(ghost.getCoords());
+
+
+        for (int row = 0; row < Config.TILE_HEIGHT_LENGTH; row++)
+            for (int col = 0; col < Config.TILE_WIDTH_LENGTH; col++)
+                if(!usedCoords.contains(new Coordinates(row, col)))
+                    foodCoords.add(new Coordinates(row, col));
+        return foodCoords;
+    }
+
     public void draw(char[][] gameMatrix) {
         for (Drawable d : drawables) {
             char drawing = d.draw();
             if (drawing == ' ')
                 continue;
-            int x = d.getCoords().getX();
-            int y = d.getCoords().getY();
+            int x = d.getCoords().getRow();
+            int y = d.getCoords().getCol();
             gameMatrix[x][y] = drawing;
         }
     }

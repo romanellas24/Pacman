@@ -23,6 +23,8 @@ public class TileDrawer extends JPanel {
         switch (symbol) {
             case 'P':
                 return new PlayerTile(row, col);
+            case 'G':
+                return new GhostTile(row, col);
             case 'f':
                 return new FoodTile(row, col);
             case 'w':

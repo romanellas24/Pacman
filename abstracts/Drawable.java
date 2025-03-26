@@ -13,11 +13,4 @@ abstract public class Drawable {
         return coordinates;
     }
 
-    protected boolean isPositionValid(Coordinates coordinates) {
-        if(coordinates.getX() < 0) return false;
-        if(coordinates.getY() < 0) return false;
-        if(coordinates.getX() >= Config.TILE_HEIGHT_LENGTH) return false;
-        return coordinates.getY() < Config.TILE_WIDTH_LENGTH;
-    }
-
 }
