@@ -17,6 +17,7 @@ public class Ghost extends Drawable {
         followDirection = Direction.STAY;
     }
 
+    //TODO CHANGE WITH COLLECTION
     public void setAvailDirections(Direction[] availDirections) {
         this.availDirections = availDirections;
     }

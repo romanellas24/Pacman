@@ -1,6 +1,6 @@
 package abstracts;
 
-import utils.Config;
+import core.DrawingInformation;
 import utils.Coordinates;
 
 abstract public class Drawable {
