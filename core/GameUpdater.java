@@ -21,12 +21,12 @@ import static utils.Config.*;
 public class GameUpdater implements KeyListener {
 
     private Direction playerDirection;
-    private Player player;
-    private LinkedList<Food> food;
-    private LinkedList<Ghost> ghosts;
+    private final Player player;
+    private final LinkedList<Food> food;
+    private final LinkedList<Ghost> ghosts;
     private final LinkedList<Drawable> drawables;
-    private EventHandler eventHandler;
-    private Map map;
+    private final EventHandler eventHandler;
+    private final Map map;
 
     public GameUpdater() {
         playerDirection = Direction.STAY;
