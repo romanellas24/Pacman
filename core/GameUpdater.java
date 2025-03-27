@@ -65,10 +65,25 @@ public class GameUpdater implements KeyListener {
         drawables.addAll(map.getWalls());
         player.move(playerDirection);
 
+        if (player.isWinner()) {
+            System.out.println("WIN!");
+            this.draw(gameMatrix);
+            return gameMatrix;
+        }
+
+        if(player.isLooser()){
+            System.out.println("LOSE!");
+            this.draw(gameMatrix);
+            return gameMatrix;
+        }
+
         for (Ghost ghost : ghosts) {
             Direction[] dirs = getGhostsAvailableDirections(ghost.getCoords(), map.getWalls());
             ghost.setAvailDirections(dirs);
         }
+
+        if(!this.checkUneatenFood())
+            player.markAsWinner();
 
         for (Drawable d : drawables) {
             d.update();
@@ -81,6 +96,13 @@ public class GameUpdater implements KeyListener {
         //Retrieving symbols
         this.draw(gameMatrix);
         return gameMatrix;
+    }
+
+    private boolean checkUneatenFood() {
+        for (Food f : food)
+            if (!f.isDeleted())
+                return true;
+        return false;
     }
 
     private Direction[] getGhostsAvailableDirections(Coordinates ghostCoords, LinkedList<Wall> walls) {
@@ -104,7 +126,7 @@ public class GameUpdater implements KeyListener {
         return map.values().toArray(Direction[]::new);
     }
 
-    private LinkedList<Coordinates> getFoodCoords(){
+    private LinkedList<Coordinates> getFoodCoords() {
         LinkedList<Coordinates> foodCoords = new LinkedList<>();
         ArrayList<Coordinates> usedCoords = new ArrayList<>();
         usedCoords.add(player.getCoords());
@@ -116,7 +138,7 @@ public class GameUpdater implements KeyListener {
 
         for (int row = 0; row < Config.TILE_HEIGHT_LENGTH; row++)
             for (int col = 0; col < Config.TILE_WIDTH_LENGTH; col++)
-                if(!usedCoords.contains(new Coordinates(row, col)))
+                if (!usedCoords.contains(new Coordinates(row, col)))
                     foodCoords.add(new Coordinates(row, col));
         return foodCoords;
     }

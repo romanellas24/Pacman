@@ -8,11 +8,15 @@ public class Player extends Controllable {
 
     private Direction direction;
     private Coordinates previousCoordinates;
+    private boolean isWinner;
+    private boolean isLooser;
 
     public Player(Coordinates coordinates) {
         direction = Direction.STAY;
         this.coordinates = coordinates;
         this.previousCoordinates = coordinates;
+        this.isWinner = false;
+        this.isLooser = false;
     }
 
     @Override
@@ -46,6 +50,22 @@ public class Player extends Controllable {
 
 
         direction = Direction.STAY;
+    }
+
+    public boolean isWinner() {
+        return isWinner;
+    }
+
+    public boolean isLooser() {
+        return isLooser;
+    }
+
+    public void markAsWinner() {
+        this.isWinner = true;
+    }
+
+    public void markAsLooser(){
+        this.isLooser = true;
     }
 
     @Override
