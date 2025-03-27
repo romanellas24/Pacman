@@ -3,7 +3,9 @@ package gameObjects;
 import abstracts.Drawable;
 import utils.Coordinates;
 import utils.Direction;
+import utils.DrawingInformation;
 
+import java.awt.*;
 import java.util.Random;
 
 public class Ghost extends Drawable {
@@ -63,7 +65,7 @@ public class Ghost extends Drawable {
     }
 
     @Override
-    public char draw() {
-        return 'G';
+    public DrawingInformation draw() {
+        return new DrawingInformation('G', Color.RED);
     }
 }

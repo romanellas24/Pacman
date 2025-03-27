@@ -3,6 +3,9 @@ package gameObjects;
 import abstracts.Controllable;
 import utils.Coordinates;
 import utils.Direction;
+import utils.DrawingInformation;
+
+import java.awt.*;
 
 public class Player extends Controllable {
 
@@ -69,8 +72,8 @@ public class Player extends Controllable {
     }
 
     @Override
-    public char draw() {
-        return 'P';
+    public DrawingInformation draw() {
+        return new DrawingInformation('P', Color.YELLOW);
     }
 
     public void resetCoordinates() {

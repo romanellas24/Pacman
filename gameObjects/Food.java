@@ -2,6 +2,9 @@ package gameObjects;
 
 import abstracts.Drawable;
 import utils.Coordinates;
+import utils.DrawingInformation;
+
+import java.awt.*;
 
 public class Food extends Drawable {
 
@@ -16,10 +19,10 @@ public class Food extends Drawable {
     public void update() {}
 
     @Override
-    public char draw() {
+    public DrawingInformation draw() {
         if(!isDeleted())
-            return 'f';
-        return ' ';
+            return new DrawingInformation('f', Color.ORANGE) ;
+        return new DrawingInformation(' ', Color.BLACK) ;
     }
 
     public void markAsDeleted() {

@@ -2,6 +2,9 @@ package gameObjects;
 
 import abstracts.Drawable;
 import utils.Coordinates;
+import utils.DrawingInformation;
+
+import java.awt.*;
 
 public class Wall extends Drawable {
 
@@ -14,8 +17,8 @@ public class Wall extends Drawable {
     public void update() {}
 
     @Override
-    public char draw() {
-        return 'w';
+    public DrawingInformation draw() {
+        return new DrawingInformation('w', new Color(0, 34, 150));
     }
 
 }

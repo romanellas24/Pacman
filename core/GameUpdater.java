@@ -8,7 +8,9 @@ import gameObjects.Wall;
 import utils.Config;
 import utils.Coordinates;
 import utils.Direction;
+import utils.DrawingInformation;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.lang.reflect.Array;
@@ -48,16 +50,16 @@ public class GameUpdater implements KeyListener {
         eventHandler = new EventHandler();
     }
 
-    private char[][] getVoidMatrix() {
-        char[][] gameMatrix = new char[Config.TILE_HEIGHT_LENGTH][Config.TILE_WIDTH_LENGTH]; //Prima la riga, poi la colonna!
+    private DrawingInformation[][] getVoidMatrix() {
+        DrawingInformation[][] gameMatrix = new DrawingInformation[Config.TILE_HEIGHT_LENGTH][Config.TILE_WIDTH_LENGTH]; //Prima la riga, poi la colonna!
         for (int i = 0; i < Config.TILE_HEIGHT_LENGTH; i++)
             for (int j = 0; j < Config.TILE_WIDTH_LENGTH; j++)
-                gameMatrix[i][j] = ' ';
+                gameMatrix[i][j] = new DrawingInformation(' ', Color.BLACK);
         return gameMatrix;
     }
 
-    public char[][] update() {
-        char[][] gameMatrix = getVoidMatrix();
+    public DrawingInformation[][] update() {
+        DrawingInformation[][] gameMatrix = getVoidMatrix();
         drawables.clear();
         drawables.addAll(food);
         drawables.add(player);
@@ -143,10 +145,10 @@ public class GameUpdater implements KeyListener {
         return foodCoords;
     }
 
-    public void draw(char[][] gameMatrix) {
+    public void draw(DrawingInformation[][] gameMatrix) {
         for (Drawable d : drawables) {
-            char drawing = d.draw();
-            if (drawing == ' ')
+            DrawingInformation drawing = d.draw();
+            if (drawing.getSymbol() == ' ')
                 continue;
             int x = d.getCoords().getRow();
             int y = d.getCoords().getCol();

@@ -2,6 +2,7 @@ package canvas;
 
 import utils.Config;
 import utils.Coordinates;
+import utils.DrawingInformation;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +10,7 @@ import java.util.HashMap;
 
 public class TileDrawer extends JPanel {
     private final HashMap<Coordinates, Tile> tiles;
-    private char[][] frame = null;
+    private DrawingInformation[][] frame = null;
 
     public TileDrawer() {
         tiles = new HashMap<>();
@@ -19,16 +20,16 @@ public class TileDrawer extends JPanel {
 
     }
 
-    private Tile handleTile(int col, int row, char symbol) {
-        switch (symbol) {
+    private Tile handleTile(int col, int row, DrawingInformation drawingInformation) {
+        switch (drawingInformation.getSymbol()) {
             case 'P':
-                return new PlayerTile(row, col);
+                return new PlayerTile(row, col, drawingInformation.getColor());
             case 'G':
-                return new GhostTile(row, col);
+                return new GhostTile(row, col, drawingInformation.getColor());
             case 'f':
-                return new FoodTile(row, col);
+                return new FoodTile(row, col, drawingInformation.getColor());
             case 'w':
-                return new WallTile(row, col);
+                return new WallTile(row, col, drawingInformation.getColor());
             default:
                 return new Tile(row, col);
         }
@@ -57,7 +58,7 @@ public class TileDrawer extends JPanel {
 
     }
 
-    public void sendFrame(char[][] frame) {
+    public void sendFrame(DrawingInformation[][] frame) {
         this.frame = frame;
     }
 }

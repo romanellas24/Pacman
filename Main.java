@@ -1,6 +1,7 @@
 import canvas.TileDrawer;
 import core.GameUpdater;
 import utils.Config;
+import utils.DrawingInformation;
 import utils.TimedSocket;
 
 import javax.swing.JFrame;
@@ -26,7 +27,7 @@ public class Main {
         TimedSocket seconds = new TimedSocket(Config.DRAWING_RESET_COUNT_DELAY);
         GameUpdater updater = new GameUpdater();
         window.addKeyListener(updater);
-        char[][] frame = null;
+        DrawingInformation[][] frame = null;
 
         //Game loop starts here
         while (true) {
