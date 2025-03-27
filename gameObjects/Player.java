@@ -13,6 +13,7 @@ public class Player extends Controllable {
     private Coordinates previousCoordinates;
     private boolean isWinner;
     private boolean isLooser;
+    private int life;
 
     public Player(Coordinates coordinates) {
         direction = Direction.STAY;
@@ -20,6 +21,7 @@ public class Player extends Controllable {
         this.previousCoordinates = coordinates;
         this.isWinner = false;
         this.isLooser = false;
+        this.life = 3;
     }
 
     @Override
@@ -46,7 +48,7 @@ public class Player extends Controllable {
         }
 
         if (Coordinates.isPositionValid(coords)) {
-            if(!coords.equals(this.previousCoordinates))
+            if (!coords.equals(this.previousCoordinates))
                 this.previousCoordinates = this.coordinates;
             this.coordinates = coords;
         }
@@ -67,8 +69,10 @@ public class Player extends Controllable {
         this.isWinner = true;
     }
 
-    public void markAsLooser(){
-        this.isLooser = true;
+    public void handleDamage() {
+        this.life--;
+        if (this.life == 0)
+            this.isLooser = true;
     }
 
     @Override
@@ -80,4 +84,7 @@ public class Player extends Controllable {
         this.coordinates = previousCoordinates;
     }
 
+    public int getLife() {
+        return life;
+    }
 }

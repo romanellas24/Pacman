@@ -43,7 +43,7 @@ public class Main {
             window.repaint();
             frames++;
             if(seconds.isDelayElapsed()){
-                System.out.println("Updates: " + updates + "; Frames: " + frames);
+                System.out.println("Updates: " + updates + "; Frames: " + frames + "; Player life: " + updater.getPlayerLife());
                 updates = 0;
                 frames = 0;
             }

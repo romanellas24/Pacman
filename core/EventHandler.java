@@ -25,7 +25,7 @@ public class EventHandler {
     }
 
     public void handleCollision(Player player, Ghost ghost) {
-        player.markAsLooser();
+        player.handleDamage();
     }
 
 }

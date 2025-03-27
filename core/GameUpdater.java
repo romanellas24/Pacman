@@ -156,6 +156,10 @@ public class GameUpdater implements KeyListener {
         }
     }
 
+    public int getPlayerLife(){
+        return this.player.getLife();
+    }
+
     public void keyTyped(KeyEvent e) {
     }
 
