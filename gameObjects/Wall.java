@@ -10,15 +10,20 @@ public class Wall extends Drawable {
 
 
     public Wall(Coordinates coords) {
-        this.coordinates = coords;
+        super(coords);
+        //TODO IMPLEMENT
+    }
+
+
+    @Override
+    public void update() {
+        //TODO IMPLEMENT
     }
 
     @Override
-    public void update() {}
-
-    @Override
     public DrawingInformation draw() {
-        return new DrawingInformation('w', new Color(0, 34, 150));
+        //TODO IMPLEMENT
+        return new DrawingInformation(' ', Color.BLACK);
     }
 
 }

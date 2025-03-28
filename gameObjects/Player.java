@@ -9,82 +9,49 @@ import java.awt.*;
 
 public class Player extends Controllable {
 
-    private Direction direction;
-    private Coordinates previousCoordinates;
-    private boolean isWinner;
-    private boolean isLooser;
-    private int life;
-
     public Player(Coordinates coordinates) {
-        direction = Direction.STAY;
-        this.coordinates = coordinates;
-        this.previousCoordinates = coordinates;
-        this.isWinner = false;
-        this.isLooser = false;
-        this.life = 3;
+        super(coordinates);
     }
 
     @Override
     public void move(Direction direction) {
-        this.direction = direction;
+        //TODO IMPLEMENT
     }
 
     @Override
     public void update() {
-        Coordinates coords = coordinates;
-        switch (direction) {
-            case UP:
-                coords = new Coordinates(coordinates.getRow() - 1, coordinates.getCol());
-                break;
-            case DOWN:
-                coords = new Coordinates(coordinates.getRow() + 1, coordinates.getCol());
-                break;
-            case LEFT:
-                coords = new Coordinates(coordinates.getRow(), coordinates.getCol() - 1);
-                break;
-            case RIGHT:
-                coords = new Coordinates(coordinates.getRow(), coordinates.getCol() + 1);
-                break;
-        }
-
-        if (Coordinates.isPositionValid(coords)) {
-            if (!coords.equals(this.previousCoordinates))
-                this.previousCoordinates = this.coordinates;
-            this.coordinates = coords;
-        }
-
-
-        direction = Direction.STAY;
+        //TODO IMPLEMENT
     }
 
     public boolean isWinner() {
-        return isWinner;
+        //TODO IMPLEMENT
+        return false;
     }
 
     public boolean isLooser() {
-        return isLooser;
+        //TODO IMPLEMENT
+        return false;
     }
 
     public void markAsWinner() {
-        this.isWinner = true;
+        //TODO IMPLEMENT
     }
 
     public void handleDamage() {
-        this.life--;
-        if (this.life == 0)
-            this.isLooser = true;
+        //TODO IMPLEMENT
     }
 
     @Override
     public DrawingInformation draw() {
-        return new DrawingInformation('P', Color.YELLOW);
+        return new DrawingInformation(' ', Color.BLACK);
     }
 
     public void resetCoordinates() {
-        this.coordinates = previousCoordinates;
+        //TODO IMPLEMENT
     }
 
     public int getLife() {
-        return life;
+        //TODO IMPLEMENT
+        return 0;
     }
 }

@@ -8,11 +8,9 @@ import java.awt.*;
 
 public class Food extends Drawable {
 
-    private boolean isDeleted;
-
     public Food(Coordinates coords) {
-        this.coordinates = coords;
-        this.isDeleted = false;
+        super(coords);
+        //TODO: IMPLEMENT
     }
 
     @Override
@@ -20,17 +18,17 @@ public class Food extends Drawable {
 
     @Override
     public DrawingInformation draw() {
-        if(!isDeleted())
-            return new DrawingInformation('f', Color.ORANGE) ;
+        //TODO: IMPLEMENT
         return new DrawingInformation(' ', Color.BLACK) ;
     }
 
     public void markAsDeleted() {
-        isDeleted = true;
+        //TODO: IMPLEMENT
     }
 
     public boolean isDeleted() {
-        return isDeleted;
+        //TODO: IMPLEMENT
+        return false;
     }
 
 }
