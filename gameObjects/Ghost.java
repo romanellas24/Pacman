@@ -6,21 +6,21 @@ import utils.Direction;
 import utils.DrawingInformation;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Ghost extends Drawable {
 
-    private Direction[] availDirections; //Here avail directions
+    private ArrayList<Direction> availDirections; //Here avail directions
     private Direction followDirection;
 
     public Ghost(Coordinates coords) {
         this.coordinates = coords;
-        this.availDirections = new Direction[]{};
+        this.availDirections = new ArrayList<>();
         followDirection = Direction.STAY;
     }
 
-    //TODO CHANGE WITH COLLECTION
-    public void setAvailDirections(Direction[] availDirections) {
+    public void setAvailDirections(ArrayList<Direction> availDirections) {
         this.availDirections = availDirections;
     }
 
@@ -60,8 +60,8 @@ public class Ghost extends Drawable {
     }
 
     private Direction chooseDirection() {
-        int rnd = new Random().nextInt(availDirections.length);
-        return availDirections[rnd];
+        int rnd = new Random().nextInt(availDirections.size());
+        return availDirections.get(rnd);
     }
 
     @Override

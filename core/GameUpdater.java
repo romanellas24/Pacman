@@ -17,6 +17,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 import static utils.Config.*;
 
@@ -81,7 +82,7 @@ public class GameUpdater implements KeyListener {
 
         for (Ghost ghost : ghosts) {
             Direction[] dirs = getGhostsAvailableDirections(ghost.getCoords(), map.getWalls());
-            ghost.setAvailDirections(dirs);
+            ghost.setAvailDirections(new ArrayList<>(List.of(dirs)));
         }
 
         if(!this.checkUneatenFood())
